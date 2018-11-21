@@ -23,10 +23,10 @@ reddit = praw.Reddit(client_id='',
                      password='',
                      user_agent='',
                      username='')
-subreddit_list = {'anime_irl':['anime_irl'], 'hatsune':['hatsune'], 'blackpeopletwitter':['blackpeopletwitter'], 'fireemblemheroes':['fireemblemheroes'], 'MEOW_IRL':['MEOW_IRL'], 'peoplefuckingdying':['peoplefuckingdying'], 'animemes':['animemes'], 'animeow_irl':['animeow_irl'], 'smugs':['smugs'], 'cutelittlefangs':['cutelittlefangs'], 'rarekumikos':['rarekumikos'], 'dankruto':['dankruto']}
-subreddit_with_caption = {'fireemblemheroes':True, 'peoplefuckingdying':True, 'anime_irl':False, 'hatsune':False, 'blackpeopletwitter':False, 'MEOW_IRL':False, 'animemes':False, 'animeow_irl':False, 'smugs':False, 'cutelittlefangs':False, 'rarekumikos':True, 'dankruto':False}
+subreddit_list = {'anime_irl':['anime_irl'], 'hatsune':['hatsune'], 'blackpeopletwitter':['blackpeopletwitter'], 'fireemblemheroes':['fireemblemheroes'], 'MEOW_IRL':['MEOW_IRL'], 'peoplefuckingdying':['peoplefuckingdying'], 'animemes':['animemes'], 'animeow_irl':['animeow_irl'], 'smugs':['smugs'], 'cutelittlefangs':['cutelittlefangs'], 'rarekumikos':['rarekumikos'], 'dankruto':['dankruto'], 'shitpostcrusaders':['shitpostcrusaders']}
+subreddit_with_caption = {'fireemblemheroes':True, 'peoplefuckingdying':True, 'anime_irl':False, 'hatsune':False, 'blackpeopletwitter':False, 'MEOW_IRL':False, 'animemes':False, 'animeow_irl':False, 'smugs':False, 'cutelittlefangs':False, 'rarekumikos':True, 'dankruto':False, 'shitpostcrusaders':False}
 
-subscription_type = {'hatsune':'all', 'anime_irl':'day','blackpeopletwitter':'month', 'fireemblemheroes':'day', 'MEOW_IRL':'day', 'peoplefuckingdying':'month', 'animemes':'day', 'animeow_irl':'month', 'smugs':'all', 'cutelittlefangs':'all', 'rarekumikos':'all', 'dankruto':'week'}
+subscription_type = {'hatsune':'all', 'anime_irl':'day','blackpeopletwitter':'month', 'fireemblemheroes':'day', 'MEOW_IRL':'day', 'peoplefuckingdying':'month', 'animemes':'day', 'animeow_irl':'month', 'smugs':'all', 'cutelittlefangs':'all', 'rarekumikos':'all', 'dankruto':'week', 'shitpostcrusaders':'all'}
 print(reddit.user.me())
 submission_url="Broken :frowning2:"
 result="Broken :frowning2:"
@@ -181,10 +181,16 @@ async def on_message(message):
 		subredditScraper("dankruto")
 		msg = submission_url.format(message)
 		await client.send_message(message.channel, msg)
+
+#Miku posts from /r/shitpostcrusaders
+	if message.content.startswith('/jojo'):
+		subredditScraper("shitpostcrusaders")
+		msg = submission_url.format(message)
+		await client.send_message(message.channel, msg)
 		
 #Miku sends a list of help commands!
     if message.content.startswith('/help'):
-	    msg = 'Hello {0.author.mention}! Here is a list of commands that Miku recognizes! ```Markdown\n\n\n# List of Commands # \n\n/hello, /hi - Miku says hi! \n\n/genki - Miku returns her energy levels! \n\n/thanks, /arigatou - Miku says thanks! \n\n/bye - Miku says bye :( \n\n/poke - Miku gets poked. \n\n/hugs - Miku hugs you! \n\n/anime_irl, bptwitter, peoplefuckingdying, meow_irl, animeow_irl, animemes, rarekumikos, feh, smugs, fangs - Miku posts images from the subreddit.```'.format(message)
+	    msg = 'Hello {0.author.mention}! Here is a list of commands that Miku recognizes! ```Markdown\n\n\n# List of Commands # \n\n/hello, /hi - Miku says hi! \n\n/genki - Miku returns her energy levels! \n\n/thanks, /arigatou - Miku says thanks! \n\n/bye - Miku says bye :( \n\n/poke - Miku gets poked. \n\n/hugs - Miku hugs you! \n\n/anime/animeow/meow_irl, bptwitter, peoplefuckingdying, animemes, rarekumikos, feh, smugs, fangs - Miku posts images from the subreddit.```'.format(message)
 	    await client.send_message(message.channel, '{0.author.mention} I\'ve sent you a list of commands!'.format(message))
 	    await client.send_message(message.author, msg)
 
@@ -193,7 +199,7 @@ async def on_message(message):
     	msg = ['やめて！', 'やーやめろー！', '何？', 'もう。。。', 'おい！', 'ん？', 'いや！', 'きゃー！']
     	await client.send_message(message.channel, random.choice(msg))
 
-    if message.content.startswith('/hugs'):
+    if message.content.startswith('/hug'):
     	msg = 'Miku hugs {0.author.mention}!'.format(message)
     	await client.send_message(message.channel, msg)
 
